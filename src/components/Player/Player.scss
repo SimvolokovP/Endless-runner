@@ -1,0 +1,11 @@
+.player {
+  width: 108px;
+  position: absolute;
+  left: 150px;
+  top: 10px;
+  z-index: 100;
+
+  & img {
+    width: 100%;
+  }
+}
