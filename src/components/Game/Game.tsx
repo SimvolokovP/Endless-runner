@@ -9,25 +9,8 @@ const Game = () => {
 
   const [playerSkin, setPlayerSkin] = useState<string>("pavel");
 
-  const groundHeight = 645;
-  const initialGrounds = [0, groundHeight];
-  const [grounds, setGrounds] = useState(initialGrounds);
-
   //   const speedScale = 1;
   const SPEED = 0.5;
-
-  const updateGrounds = () => {
-    setGrounds((prevGrounds) => {
-      return prevGrounds.map((ground) => {
-        let newPosition = ground + SPEED * 10;
-
-        if (newPosition >= groundHeight) {
-          newPosition = -groundHeight;
-        }
-        return newPosition;
-      });
-    });
-  };
 
   const movePlayer = (direction: string) => {
     if (
@@ -46,19 +29,6 @@ const Game = () => {
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-
-    const interval = setInterval(() => {
-      updateGrounds();
-    }, 1000 / 60);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      clearInterval(interval);
-    };
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -67,9 +37,7 @@ const Game = () => {
   return (
     <div className="game">
       <Player position={currentPosition} skin={playerSkin} />
-      {grounds.map((position, index) => (
-        <Ground key={index} position={position} />
-      ))}
+      <Ground speed={SPEED} />
     </div>
   );
 };
