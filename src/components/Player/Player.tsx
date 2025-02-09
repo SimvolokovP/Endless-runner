@@ -7,9 +7,10 @@ import "./Player.scss";
 interface PlayerProps {
   position: number;
   skin: string;
+  isStart: boolean;
 }
 
-const Player: FC<PlayerProps> = ({ position, skin }) => {
+const Player: FC<PlayerProps> = ({ position, skin, isStart }) => {
   const playerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
@@ -29,17 +30,17 @@ const Player: FC<PlayerProps> = ({ position, skin }) => {
     };
 
     initializePlayerFigures();
-  }, []);
+  }, [isStart]);
 
   useEffect(() => {
-    if (playerData && imageRef) {
+    if (playerData && imageRef && isStart) {
       const runAnimation = setInterval(() => {
         handleRun(imageRef, playerData);
       }, 200);
 
       return () => clearInterval(runAnimation);
     }
-  }, [playerData]);
+  }, [playerData, isStart]);
 
   //   const setPlayerLose = () => {
   //     if (playerData) {

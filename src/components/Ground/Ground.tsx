@@ -4,22 +4,25 @@ import "./Ground.scss";
 
 interface GroundProps {
   speed: number;
+  isStart: boolean;
 }
 
-const Ground: FC<GroundProps> = ({ speed }) => {
+const Ground: FC<GroundProps> = ({ speed, isStart }) => {
   const groundHeight = 645;
   const initialGrounds = [0, groundHeight];
   const [grounds, setGrounds] = useState(initialGrounds);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      updateGrounds();
-    }, 1000 / 60);
+    if (isStart) {
+      const interval = setInterval(() => {
+        updateGrounds();
+      }, 1000 / 60);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [isStart]);
 
   const updateGrounds = () => {
     setGrounds((prevGrounds) => {

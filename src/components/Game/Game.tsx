@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Player from "../Player/Player";
 import "./Game.scss";
 import { gamePositions } from "../../models/player";
 import Ground from "../Ground/Ground";
 
-const Game = () => {
+interface GameProps {
+  isStart: boolean;
+}
+
+const Game: FC<GameProps> = ({ isStart }) => {
   const [currentPosition, setCurrentPosition] = useState(1);
 
   const [playerSkin, setPlayerSkin] = useState<string>("pavel");
@@ -24,6 +28,9 @@ const Game = () => {
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
+    console.log(isStart);
+    if (!isStart) return;
+
     movePlayer(event.key);
   };
 
@@ -32,12 +39,13 @@ const Game = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [currentPosition]);
+  }, [currentPosition, isStart]);
 
   return (
     <div className="game">
-      <Player position={currentPosition} skin={playerSkin} />
-      <Ground speed={SPEED} />
+      {!isStart && <div className="game__gray"></div>}
+      <Player position={currentPosition} skin={playerSkin} isStart={isStart} />
+      <Ground speed={SPEED} isStart={isStart} />
     </div>
   );
 };
