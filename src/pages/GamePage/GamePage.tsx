@@ -8,13 +8,12 @@ const GamePage = () => {
 
   const handleStartToggle = () => {
     setIsStart(true);
-    console.log(!isStart);
   };
 
   return (
     <section className="game-page">
       <div className="container game-page__container">
-        <Game isStart={isStart} />
+        <Game isStart={isStart} setIsStart={setIsStart} />
         {!isStart ? (
           <div className="game-page__start">
             <span>Play?</span>

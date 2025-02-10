@@ -3,15 +3,20 @@ import Player from "../Player/Player";
 import "./Game.scss";
 import { gamePositions } from "../../models/player";
 import Ground from "../Ground/Ground";
+import Obstacle from "../Obstacle/Obstacle";
+import { isCollision } from "../../helpers/collisionHelpers";
 
 interface GameProps {
   isStart: boolean;
+  setIsStart: (v: boolean) => void;
 }
 
-const Game: FC<GameProps> = ({ isStart }) => {
+const Game: FC<GameProps> = ({ isStart, setIsStart }) => {
   const [currentPosition, setCurrentPosition] = useState(1);
+  const [playerRect, setPlayerRect] = useState<DOMRect | null>(null);
+  const [obstacleRect, setObstacleRect] = useState<DOMRect | null>(null);
 
-  const [playerSkin, setPlayerSkin] = useState<string>("pavel");
+  const [playerSkin, setPlayerSkin] = useState<string>("kevin");
 
   //   const speedScale = 1;
   const SPEED = 0.5;
@@ -28,7 +33,6 @@ const Game: FC<GameProps> = ({ isStart }) => {
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    console.log(isStart);
     if (!isStart) return;
 
     movePlayer(event.key);
@@ -41,11 +45,30 @@ const Game: FC<GameProps> = ({ isStart }) => {
     };
   }, [currentPosition, isStart]);
 
+  useEffect(() => {
+    if (isStart && playerRect && obstacleRect) {
+      if (isCollision(playerRect, obstacleRect)) {
+        setIsStart(false);
+        setPlayerRect(null);
+        setObstacleRect(null);
+        console.log("lose");
+      }
+    }
+  }, [isStart, playerRect, obstacleRect]);
+
   return (
     <div className="game">
       {!isStart && <div className="game__gray"></div>}
-      <Player position={currentPosition} skin={playerSkin} isStart={isStart} />
+      <Player
+        position={currentPosition}
+        skin={playerSkin}
+        isStart={isStart}
+        setPlayerRect={setPlayerRect}
+      />
       <Ground speed={SPEED} isStart={isStart} />
+      {isStart && (
+        <Obstacle isStart={isStart} setObstacleRect={setObstacleRect} />
+      )}
     </div>
   );
 };

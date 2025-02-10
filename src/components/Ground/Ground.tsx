@@ -13,15 +13,15 @@ const Ground: FC<GroundProps> = ({ speed, isStart }) => {
   const [grounds, setGrounds] = useState(initialGrounds);
 
   useEffect(() => {
-    if (isStart) {
-      const interval = setInterval(() => {
-        updateGrounds();
-      }, 1000 / 60);
+    // if (isStart) {
+    //   const interval = setInterval(() => {
+    //     updateGrounds();
+    //   }, 1000 / 30);
 
-      return () => {
-        clearInterval(interval);
-      };
-    }
+    //   return () => {
+    //     clearInterval(interval);
+    //   };
+    // }
   }, [isStart]);
 
   const updateGrounds = () => {

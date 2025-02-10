@@ -1,4 +1,11 @@
-import { FC, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { gamePositions, PlayerData, PlayerImage } from "../../models/player";
 import { createPlayerFigures, handleRun } from "../../helpers/playerHelpers";
 
@@ -8,9 +15,15 @@ interface PlayerProps {
   position: number;
   skin: string;
   isStart: boolean;
+  setPlayerRect: Dispatch<SetStateAction<DOMRect | null>>;
 }
 
-const Player: FC<PlayerProps> = ({ position, skin, isStart }) => {
+const Player: FC<PlayerProps> = ({
+  position,
+  skin,
+  isStart,
+  setPlayerRect,
+}) => {
   const playerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
@@ -31,6 +44,12 @@ const Player: FC<PlayerProps> = ({ position, skin, isStart }) => {
 
     initializePlayerFigures();
   }, [isStart]);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      setPlayerRect(playerRef.current?.getBoundingClientRect());
+    }
+  }, [position]);
 
   useEffect(() => {
     if (playerData && imageRef && isStart) {
