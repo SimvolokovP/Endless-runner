@@ -49,7 +49,7 @@ const Player: FC<PlayerProps> = ({
     if (playerRef.current) {
       setPlayerRect(playerRef.current?.getBoundingClientRect());
     }
-  }, [position]);
+  }, [position, isStart]);
 
   useEffect(() => {
     if (playerData && imageRef && isStart) {

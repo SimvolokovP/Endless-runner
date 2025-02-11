@@ -71,7 +71,9 @@ const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
       ref={obstacleRef}
       className="obstacle"
       style={{ bottom: `${position}px`, left: `${horizontalPosition}px` }}
-    />
+    >
+      <img src="./obstacle.png" alt="" />
+    </div>
   );
 };
 

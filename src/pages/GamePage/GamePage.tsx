@@ -1,15 +1,14 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import Game from "../../components/Game/Game";
 
 import "./GamePage.scss";
 
-const GamePage = () => {
-  const [isStart, setIsStart] = useState<boolean>(false);
+interface GamePageProps {
+  isStart: boolean;
+  setIsStart: (v: boolean) => void;
+}
 
-  const handleStartToggle = () => {
-    setIsStart(true);
-  };
-
+const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
   return (
     <section className="game-page">
       <div className="container game-page__container">
@@ -17,7 +16,7 @@ const GamePage = () => {
         {!isStart ? (
           <div className="game-page__start">
             <span>Play?</span>
-            <button onClick={handleStartToggle}>start</button>
+            <button onClick={() => setIsStart(true)}>start</button>
           </div>
         ) : (
           <></>

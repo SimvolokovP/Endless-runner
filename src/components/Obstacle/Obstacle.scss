@@ -3,7 +3,12 @@
   left: 50%;
   width: 64px;
   height: 64px;
-  background-color: red;
+
   //   transform: translateX(-50%);
   z-index: 3;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
 }

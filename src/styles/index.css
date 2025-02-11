@@ -1,3 +1,5 @@
+@import url(https://db.onlinewebfonts.com/c/e844e1db9d25590da3283ed203b03f86?family=F8BIT+WONDER%28RUS+BY+LYAJKA%29);
+
 html {
   box-sizing: border-box;
 }
@@ -9,7 +11,9 @@ html {
 }
 
 body {
+  font-family: "F8BIT WONDER(RUS BY LYAJKA)";
   background-color: #090d10;
+  color: #ffffff;
 }
 
 a {
@@ -36,4 +40,10 @@ img {
   overflow: hidden;
   border: 0;
   clip: rect(0 0 0 0);
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
