@@ -11,4 +11,4 @@ export interface PlayerData {
   playerLoseFrame: HTMLImageElement;
 }
 
-export const gamePositions = [{ left: 50 }, { left: 150 }, { left: 250 }];
+export const gamePositions = [{ left: 35 }, { left: 140 }, { left: 245 }];

@@ -1,5 +1,4 @@
-import { FC, useEffect, useState } from "react";
-
+import { FC, useEffect, useState, useRef } from "react";
 import "./Ground.scss";
 
 interface GroundProps {
@@ -11,18 +10,7 @@ const Ground: FC<GroundProps> = ({ speed, isStart }) => {
   const groundHeight = 645;
   const initialGrounds = [0, groundHeight];
   const [grounds, setGrounds] = useState(initialGrounds);
-
-  useEffect(() => {
-    // if (isStart) {
-    //   const interval = setInterval(() => {
-    //     updateGrounds();
-    //   }, 1000 / 30);
-
-    //   return () => {
-    //     clearInterval(interval);
-    //   };
-    // }
-  }, [isStart]);
+  const animationFrameRef = useRef(0);
 
   const updateGrounds = () => {
     setGrounds((prevGrounds) => {
@@ -34,7 +22,19 @@ const Ground: FC<GroundProps> = ({ speed, isStart }) => {
         return newPosition;
       });
     });
+
+    animationFrameRef.current = requestAnimationFrame(updateGrounds);
   };
+
+  useEffect(() => {
+    if (isStart) {
+      animationFrameRef.current = requestAnimationFrame(updateGrounds);
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [isStart, speed]);
 
   return (
     <>

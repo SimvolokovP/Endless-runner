@@ -24,44 +24,47 @@ const horizontalPositions = [
 const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
   const speed = 10;
   const [position, setPosition] = useState(-50);
-
   const obstacleRef = useRef<HTMLDivElement>(null);
-
   const [horizontalPosition, setHorizontalPosition] = useState<number>(
     horizontalPositions[0]
   );
+  const animationFrameRef = useRef(0);
+
+  const updatePosition = () => {
+    if (obstacleRef.current) {
+      setObstacleRect(obstacleRef.current.getBoundingClientRect());
+    }
+
+    setPosition((prev) => {
+      const newPosition = prev + speed;
+
+      if (newPosition >= window.innerHeight) {
+        const randomX = Math.floor(Math.random() * 3);
+        setHorizontalPosition(horizontalPositions[randomX]);
+        return 0;
+      } else {
+        return newPosition;
+      }
+    });
+
+    animationFrameRef.current = requestAnimationFrame(updatePosition);
+  };
 
   useEffect(() => {
+    const setInitPosition = () => {
+      setPosition(-50);
+      setObstacleRect(null);
+    };
+
     if (isStart) {
       setInitPosition();
-      const interval = setInterval(() => {
-        if (obstacleRef.current) {
-          setObstacleRect(obstacleRef.current.getBoundingClientRect());
-        }
-
-        setPosition((prev) => {
-          const newPosition = prev + speed;
-
-          if (newPosition >= window.innerHeight) {
-            const randomX = Math.floor(Math.random() * 3);
-
-            setHorizontalPosition(horizontalPositions[randomX]);
-
-            return 0;
-          } else {
-            return newPosition;
-          }
-        });
-      }, 1000 / 30);
-
-      return () => clearInterval(interval);
+      animationFrameRef.current = requestAnimationFrame(updatePosition);
     }
-  }, [speed, isStart]);
 
-  const setInitPosition = () => {
-    setPosition(-50);
-    setObstacleRect(null);
-  };
+    return () => {
+      cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [isStart, speed, setObstacleRect]);
 
   return (
     <div
