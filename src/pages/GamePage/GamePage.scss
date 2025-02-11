@@ -9,10 +9,16 @@
   &__start {
     position: absolute;
     z-index: 120;
-    background-color: red;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
+  }
+
+  &__score {
+    position: absolute;
+    top: 25px;
+    z-index: 40;
+    font-size: 18px;
   }
 }
