@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await logIn(227070);
+      const user = await logIn(227073);
       console.log(user);
     };
 

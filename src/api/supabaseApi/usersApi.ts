@@ -1,5 +1,6 @@
 import supabase from "../../database/supabase";
 import { IUser } from "../../models/IUser";
+import SkinsService from "./skinsApi";
 
 export default class UserService {
   static async getByTgId(tg_id: number) {
@@ -76,6 +77,8 @@ export default class UserService {
         console.warn("Insert User Error:", userError);
         throw new Error("Failed to insert user.");
       }
+
+      await SkinsService.addSkinForUser(insertedUser.id, 1);
 
       return insertedUser;
     } catch (error) {
