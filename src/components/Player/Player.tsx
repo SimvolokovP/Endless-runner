@@ -29,9 +29,9 @@ const Player: FC<PlayerProps> = ({
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
 
   const playerImages: PlayerImage = {
-    runFrame1: `/players/${skin}/runFrame1.png`,
-    runFrame2: `/players/${skin}/runFrame2.png`,
-    loseFrame: `/players/${skin}/loseFrame.png`,
+    runFrame1: `/players/${skin.toLowerCase()}/runFrame1.png`,
+    runFrame2: `/players/${skin.toLowerCase()}/runFrame2.png`,
+    loseFrame: `/players/${skin.toLowerCase()}/loseFrame.png`,
   };
 
   useEffect(() => {

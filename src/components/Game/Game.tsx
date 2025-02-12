@@ -5,6 +5,7 @@ import { gamePositions } from "../../models/player";
 import Ground from "../Ground/Ground";
 import Obstacle from "../Obstacle/Obstacle";
 import { isCollision } from "../../helpers/collisionHelpers";
+import useSkinStore from "../../store/useSkinStore";
 
 interface GameProps {
   isStart: boolean;
@@ -29,7 +30,7 @@ const Game: FC<GameProps> = ({
   const [playerRect, setPlayerRect] = useState<DOMRect | null>(null);
   const [obstacleRect, setObstacleRect] = useState<DOMRect | null>(null);
 
-  const [playerSkin, setPlayerSkin] = useState<string>("kevin");
+  const playerSkin = useSkinStore((state) => state.currentSkin);
 
   //   const speedScale = 1;
   const SPEED = 0.5;
