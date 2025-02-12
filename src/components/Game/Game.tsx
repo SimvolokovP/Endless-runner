@@ -9,9 +9,22 @@ import { isCollision } from "../../helpers/collisionHelpers";
 interface GameProps {
   isStart: boolean;
   setIsStart: (v: boolean) => void;
+  score: number;
+  record: number;
+  setIsNewRecord: (v: boolean) => void;
+  setRecord: (n: number) => void;
+  updateUserRecord: (n: number) => void;
 }
 
-const Game: FC<GameProps> = ({ isStart, setIsStart }) => {
+const Game: FC<GameProps> = ({
+  isStart,
+  setIsStart,
+  score,
+  record,
+  setIsNewRecord,
+  setRecord,
+  updateUserRecord,
+}) => {
   const [currentPosition, setCurrentPosition] = useState(1);
   const [playerRect, setPlayerRect] = useState<DOMRect | null>(null);
   const [obstacleRect, setObstacleRect] = useState<DOMRect | null>(null);
@@ -51,10 +64,15 @@ const Game: FC<GameProps> = ({ isStart, setIsStart }) => {
         setIsStart(false);
         setPlayerRect(null);
         setObstacleRect(null);
-        console.log("lose");
+
+        if (score > record) {
+          updateUserRecord(score);
+          setIsNewRecord(true);
+          setRecord(score);
+        }
       }
     }
-  }, [isStart, playerRect, obstacleRect]);
+  }, [isStart, playerRect, obstacleRect, score, record]);
 
   return (
     <div className="game">

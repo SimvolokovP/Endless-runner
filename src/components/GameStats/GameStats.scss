@@ -1,0 +1,31 @@
+.game-stats {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 25px;
+  z-index: 108;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+  transform: translateY(0%);
+  transition: transform 0.3s ease-in-out;
+
+  &--hide {
+    transform: translateY(-45px);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &__item {
+    background-color: #000000;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    & svg {
+      color: #ffdc52;
+    }
+  }
+}

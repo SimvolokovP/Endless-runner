@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
   }
 
   &__start {
@@ -13,6 +14,10 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+  }
+
+  &__record {
+    color: #ffdc52;
   }
 
   &__score {

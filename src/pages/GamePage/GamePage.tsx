@@ -3,6 +3,8 @@ import Game from "../../components/Game/Game";
 
 import "./GamePage.scss";
 import Button from "../../UI/Button/Button";
+import GameStats from "../../components/GameStats/GameStats";
+import useUserStore from "../../store/useUserStore";
 
 interface GamePageProps {
   isStart: boolean;
@@ -11,13 +13,22 @@ interface GamePageProps {
 
 const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
   const [score, setScore] = useState<number>(0);
+  const [record, setRecord] = useState<number>(0);
+  const [isNewRecord, setIsNewRecord] = useState<boolean>(false);
+
+  const { currentUser, updateUserRecord } = useUserStore();
+
+  useEffect(() => {
+    if (currentUser?.record) {
+      setRecord(+currentUser.record);
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     let scoreInterval = null;
 
     if (isStart) {
       scoreInterval = setInterval(() => {
-        console.log(score);
         setScore((prevScore) => prevScore + 1);
       }, 1000);
     }
@@ -31,15 +42,29 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
 
   const handleStart = () => {
     setScore(0);
+    setIsNewRecord(false);
     setIsStart(true);
   };
 
   return (
     <section className="game-page">
       <div className="container game-page__container">
-        <Game isStart={isStart} setIsStart={setIsStart} />
+        <Game
+          isStart={isStart}
+          setIsStart={setIsStart}
+          record={record}
+          setRecord={setRecord}
+          score={score}
+          setIsNewRecord={setIsNewRecord}
+          updateUserRecord={updateUserRecord}
+        />
         {!isStart ? (
           <div className="game-page__start">
+            {isNewRecord ? (
+              <span className="game-page__record">New Record!</span>
+            ) : (
+              <></>
+            )}
             {score > 0 ? <span>Your score: {score}</span> : <></>}
             <Button
               width={160}
@@ -54,6 +79,7 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
           <></>
         )}
         {isStart && <div className="game-page__score">{score}</div>}
+        {<GameStats record={record} isStart={isStart} />}
       </div>
     </section>
   );

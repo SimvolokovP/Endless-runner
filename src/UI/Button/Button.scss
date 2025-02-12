@@ -12,11 +12,11 @@
 
 @keyframes line-text {
   from {
-    transform: translateX(115%);
+    transform: translateX(180%);
     transform-origin: left center;
   }
   to {
-    transform: translateX(-115%);
+    transform: translateX(-180%);
     transform-origin: right center;
   }
 }
