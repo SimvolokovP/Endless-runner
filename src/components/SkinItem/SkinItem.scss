@@ -1,0 +1,25 @@
+.skin-item {
+  position: relative;
+  border-radius: 6px;
+  border: 2px solid #738ca0;
+  padding: 8px;
+  padding-bottom: 27px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  & img {
+    max-width: 108px;
+    min-height: 108px;
+  }
+
+  & button {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffdc52;
+    cursor: pointer;
+    
+  }
+}
