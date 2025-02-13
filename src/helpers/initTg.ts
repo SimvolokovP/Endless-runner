@@ -1,29 +1,8 @@
-import {
-  init,
-  initData,
-  miniApp,
-  viewport,
-
-} from "@telegram-apps/sdk-react";
+const tg = Telegram.WebApp;
 
 const initTg = () => {
-  init();
-
-  miniApp.mount();
-  initData.restore();
-
-  
-
-  viewport
-    .mount()
-    .catch((e) => {
-      console.error("Ошибка монтирования viewport", e);
-    })
-    .then(() => {
-      viewport.expand();
-      viewport.bindCssVars();
-    });
-
+  tg.disableVerticalSwipes();
+  tg.exitFullscreen();
 };
 
 export default initTg;
