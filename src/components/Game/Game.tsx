@@ -32,7 +32,6 @@ const Game: FC<GameProps> = ({
 
   const playerSkin = useSkinStore((state) => state.currentSkin);
 
-  //   const speedScale = 1;
   const SPEED = 0.5;
 
   const movePlayer = (direction: string) => {
@@ -48,14 +47,41 @@ const Game: FC<GameProps> = ({
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (!isStart) return;
-
     movePlayer(event.key);
+  };
+
+  let touchStartX: number = 0;
+  let touchEndX: number = 0;
+
+  const handleTouchStart = (event: TouchEvent) => {
+    touchStartX = event.touches[0].clientX;
+  };
+
+  const handleTouchMove = (event: TouchEvent) => {
+    touchEndX = event.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isStart) return;
+    if (touchEndX < touchStartX) {
+      movePlayer("ArrowLeft");
+    }
+    if (touchEndX > touchStartX) {
+      movePlayer("ArrowRight");
+    }
   };
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchEnd);
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [currentPosition, isStart]);
 

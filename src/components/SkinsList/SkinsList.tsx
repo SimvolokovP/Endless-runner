@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ISkin } from "../../models/ISkin";
 import SkinsService from "../../api/supabaseApi/skinsApi";
 import SkinItem from "../SkinItem/SkinItem";
+import { ClipLoader } from "react-spinners";
 
 import "./SkinsList.scss";
 import useUserStore from "../../store/useUserStore";
@@ -52,7 +53,7 @@ const SkinsList = () => {
             );
           })
         ) : (
-          <li>No skins available</li>
+          <ClipLoader color="#ffdc52" />
         )}
       </ul>
     </>

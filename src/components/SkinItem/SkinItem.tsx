@@ -38,7 +38,9 @@ const SkinItem: FC<SkinItemProps> = ({
       <div>{skin.name}</div>
       {!isAvailable && <div className="skin-item__blocked">blocked</div>}
       <img
-        src={`./players/${skin.name.toLowerCase()}/runFrame1.png`}
+        src={`https://${
+          import.meta.env.VITE_SUPABASE_ID
+        }.supabase.co/storage/v1/object/public/skins/${skin.name.toLowerCase()}/runFrame1.png`}
         alt={skin.name}
       />
       {isAvailable ? (

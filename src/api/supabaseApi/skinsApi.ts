@@ -52,6 +52,8 @@ export default class SkinsService {
       }
 
       const skins = data.map((item) => item.skins).filter(Boolean);
+
+      // @ts-ignore
       return skins;
     } catch (error) {
       console.warn("Failed to retrieve available skins:", error);
