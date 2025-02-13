@@ -1,9 +1,7 @@
 import {
   init,
   initData,
-  mainButton,
   miniApp,
-  themeParams,
   viewport,
 } from "@telegram-apps/sdk-react";
 
@@ -11,8 +9,6 @@ const initTg = () => {
   init();
 
   miniApp.mount();
-  mainButton.mount();
-  themeParams.mount();
   initData.restore();
 
   viewport
@@ -25,8 +21,6 @@ const initTg = () => {
       viewport.bindCssVars();
     });
 
-  miniApp.bindCssVars();
-  themeParams.bindCssVars();
 };
 
 export default initTg;
