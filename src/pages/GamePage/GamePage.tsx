@@ -5,6 +5,7 @@ import "./GamePage.scss";
 import Button from "../../UI/Button/Button";
 import GameStats from "../../components/GameStats/GameStats";
 import useUserStore from "../../store/useUserStore";
+import { useTg } from "../../hooks/useTg";
 
 interface GamePageProps {
   isStart: boolean;
@@ -17,6 +18,16 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
   const [isNewRecord, setIsNewRecord] = useState<boolean>(false);
 
   const { currentUser, updateUserRecord } = useUserStore();
+
+  const { tg } = useTg();
+
+  useEffect(() => {
+    if (isStart) {
+      tg.disableVerticalSwipes();
+    } else {
+      tg.enableVerticalSwipes();
+    }
+  }, [isStart]);
 
   useEffect(() => {
     if (currentUser?.record) {
