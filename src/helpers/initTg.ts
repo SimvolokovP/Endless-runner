@@ -3,6 +3,7 @@ import {
   initData,
   miniApp,
   viewport,
+
 } from "@telegram-apps/sdk-react";
 
 const initTg = () => {
@@ -10,6 +11,8 @@ const initTg = () => {
 
   miniApp.mount();
   initData.restore();
+
+  
 
   viewport
     .mount()
