@@ -19,7 +19,7 @@ export function updateGame(
     return;
   }
 
-  const delta = time - lastTime;
+  // const delta = time - lastTime;
 
   if (checkCollision()) {
     // handleLose();
