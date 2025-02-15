@@ -4,15 +4,16 @@ import GamePage from "./pages/GamePage/GamePage";
 import { Route, Routes } from "react-router-dom";
 import useUserStore from "./store/useUserStore";
 import ShopPage from "./pages/ShopPage/ShopPage";
+import { useTg } from "./hooks/useTg";
 
 function App() {
   const [isStart, setIsStart] = useState<boolean>(false);
+  const { user } = useTg();
   const { logIn } = useUserStore();
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await logIn(227073);
-      console.log(user);
+      await logIn(user?.id || 227072);
     };
 
     fetchUser();

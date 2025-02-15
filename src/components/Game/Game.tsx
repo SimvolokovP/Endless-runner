@@ -28,7 +28,7 @@ const Game: FC<GameProps> = ({
 }) => {
   const [currentPosition, setCurrentPosition] = useState(1);
   const [playerRect, setPlayerRect] = useState<DOMRect | null>(null);
-  const [obstacleRect, setObstacleRect] = useState<DOMRect | null>(null);
+  const [obstacleRect, setObstacleRect] = useState<DOMRect[] | null>(null);
 
   const playerSkin = useSkinStore((state) => state.currentSkin);
 
@@ -87,7 +87,7 @@ const Game: FC<GameProps> = ({
 
   useEffect(() => {
     if (isStart && playerRect && obstacleRect) {
-      if (isCollision(playerRect, obstacleRect)) {
+      if (obstacleRect.some((rect) => isCollision(playerRect, rect))) {
         setIsStart(false);
         setPlayerRect(null);
         setObstacleRect(null);

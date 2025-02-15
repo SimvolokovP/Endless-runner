@@ -12,7 +12,7 @@ import { gamePositions } from "../../models/player";
 
 interface ObstacleProps {
   isStart: boolean;
-  setObstacleRect: Dispatch<SetStateAction<DOMRect | null>>;
+  setObstacleRect: Dispatch<SetStateAction<DOMRect[] | null>>;
 }
 
 const horizontalPositions = [
@@ -23,36 +23,50 @@ const horizontalPositions = [
 
 const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
   const speed = 10;
-  const [position, setPosition] = useState(-50);
-  const obstacleRef = useRef<HTMLDivElement>(null);
-  const [horizontalPosition, setHorizontalPosition] = useState<number>(
-    horizontalPositions[0]
-  );
+  const [positions, setPositions] = useState<number[]>([-50, -50]);
+  const obstacleRefs = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+  ];
+  const [horizontalPositionsState, setHorizontalPositionsState] = useState<
+    number[]
+  >([horizontalPositions[0], horizontalPositions[1]]);
   const animationFrameRef = useRef(0);
 
   const updatePosition = () => {
-    if (obstacleRef.current) {
-      setObstacleRect(obstacleRef.current.getBoundingClientRect());
-    }
+    const newObstacleRects: DOMRect[] = []; 
 
-    setPosition((prev) => {
-      const newPosition = prev + speed;
-
-      if (newPosition >= window.innerHeight) {
-        const randomX = Math.floor(Math.random() * 3);
-        setHorizontalPosition(horizontalPositions[randomX]);
-        return 0;
-      } else {
-        return newPosition;
+    obstacleRefs.forEach((ref, index) => {
+      if (ref.current) {
+        newObstacleRects.push(ref.current.getBoundingClientRect()); 
       }
+
+      setPositions((prev) => {
+        const newPosition = [...prev];
+        newPosition[index] += speed;
+
+        if (newPosition[index] >= window.innerHeight) {
+          const randomX = Math.floor(Math.random() * 3);
+          newPosition[index] = 0; // Сбросить позицию вниз
+          setHorizontalPositionsState((prevPositions) => {
+            const newPositions = [...prevPositions];
+            newPositions[index] = horizontalPositions[randomX];
+            return newPositions;
+          });
+        }
+
+        return newPosition;
+      });
     });
+
+    setObstacleRect(newObstacleRects); 
 
     animationFrameRef.current = requestAnimationFrame(updatePosition);
   };
 
   useEffect(() => {
     const setInitPosition = () => {
-      setPosition(-50);
+      setPositions([-50, -50]);
       setObstacleRect(null);
     };
 
@@ -67,13 +81,21 @@ const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
   }, [isStart, speed, setObstacleRect]);
 
   return (
-    <div
-      ref={obstacleRef}
-      className="obstacle"
-      style={{ bottom: `${position}px`, left: `${horizontalPosition}px` }}
-    >
-      <img src="./obstacle.png" alt="" />
-    </div>
+    <>
+      {positions.map((position, index) => (
+        <div
+          key={index}
+          ref={obstacleRefs[index]}
+          className="obstacle"
+          style={{
+            bottom: `${position}px`,
+            left: `${horizontalPositionsState[index]}px`,
+          }}
+        >
+          <img src="./obstacle.png" alt="" />
+        </div>
+      ))}
+    </>
   );
 };
 

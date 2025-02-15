@@ -1,7 +1,7 @@
 const tg = Telegram.WebApp;
 
 const initTg = () => {
-  tg.exitFullscreen();
+  // tg.exitFullscreen();
 };
 
 export default initTg;

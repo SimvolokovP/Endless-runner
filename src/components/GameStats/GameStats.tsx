@@ -27,7 +27,7 @@ const GameStats: FC<GameStatsProps> = ({ isStart, record }) => {
     <div className={isStart ? "game-stats game-stats--hide" : "game-stats"}>
       <div className="game-stats__item">
         <BiSolidFace />
-        {user && <span>{getUsername(user)}</span>}
+        {user ? <span>{getUsername(user)}</span> : <span>Not User</span>}
       </div>
       <div className="game-stats__item">
         <FaMedal /> <span>{record}</span>
