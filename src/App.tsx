@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import useUserStore from "./store/useUserStore";
 import ShopPage from "./pages/ShopPage/ShopPage";
 import { useTg } from "./hooks/useTg";
+import LeaderboardPage from "./pages/LeaderboardPage/LeaderboardPage";
 
 function App() {
   const [isStart, setIsStart] = useState<boolean>(false);
@@ -27,6 +28,7 @@ function App() {
           element={<GamePage isStart={isStart} setIsStart={setIsStart} />}
         ></Route>
         <Route path="/store" element={<ShopPage />}></Route>
+        <Route path="/leaders" element={<LeaderboardPage />}></Route>
       </Routes>
       <MobileBar isStart={isStart} />
     </>
