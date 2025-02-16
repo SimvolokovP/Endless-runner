@@ -3,4 +3,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(160px, 1fr));
   gap: 16px;
+  max-height: 512px;
+  overflow-y: auto;
+  padding-bottom: 25px;
 }

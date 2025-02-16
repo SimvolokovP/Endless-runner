@@ -23,6 +23,26 @@ export default class UserService {
     }
   }
 
+  static async getUsersByRecord(limit: number = 10) {
+    try {
+      const { data: users, error } = await supabase
+        .from("users")
+        .select()
+        .order("record", { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        console.warn("Error getting users:", error);
+        throw new Error("Failed to get users.");
+      }
+
+      return users;
+    } catch (error) {
+      console.warn("Failed to retrieve all users:", error);
+      throw error;
+    }
+  }
+
   static async getAllUsers() {
     try {
       const { data: users, error } = await supabase.from("users").select();
