@@ -22,11 +22,7 @@ const SkinItem: FC<SkinItemProps> = ({
   fetchAvailableSkins,
 }) => {
   const { setSkin, currentSkin } = useSkinStore();
-  const { hapticFeedback, invoice, onInvoiceClosed } = useTg();
-
-  useEffect(() => {
-    console.log(onInvoiceClosed);
-  }, [onInvoiceClosed]);
+  const { hapticFeedback, invoice, tg } = useTg();
 
   const buySkin = async () => {
     if (currentUser?.id && skin.id) {
@@ -50,7 +46,15 @@ const SkinItem: FC<SkinItemProps> = ({
         userId: currentUser?.id,
         amount: skin.price,
       });
-      const openInvoice = await invoice(resp.invoice_link);
+      await invoice(resp.invoice_link);
+
+      tg.onEvent("invoiceClosed", async (inv) => {
+        if (inv.status === "paid" && currentUser.id && skin.id) {
+          await SkinsService.addSkinForUser(currentUser?.id, skin.id);
+          console.log("buy");
+          fetchAvailableSkins();
+        }
+      });
     }
   };
 
