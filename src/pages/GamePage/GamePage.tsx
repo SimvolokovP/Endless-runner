@@ -6,6 +6,7 @@ import Button from "../../UI/Button/Button";
 import GameStats from "../../components/GameStats/GameStats";
 import useUserStore from "../../store/useUserStore";
 import { useTg } from "../../hooks/useTg";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 interface GamePageProps {
   isStart: boolean;
@@ -59,6 +60,7 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
 
   return (
     <section className="game-page">
+      {!currentUser && <LoadingScreen />}
       <div className="container game-page__container">
         <Game
           isStart={isStart}
