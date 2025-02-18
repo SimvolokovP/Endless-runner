@@ -36,7 +36,7 @@ const SkinsList = () => {
   return (
     <>
       <ul className="skins-list list-reset">
-        {skins.length > 0 ? (
+        {skins.length && availableSkins.length > 0 ? (
           skins.map((skin) => {
             const isAvailable = availableSkins.some(
               (available) => available.id === skin.id

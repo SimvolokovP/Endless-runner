@@ -20,7 +20,11 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
 
   const { currentUser, updateUserRecord } = useUserStore();
 
-  const { tg } = useTg();
+  const { tg, backBtn } = useTg();
+
+  useEffect(() => {
+    backBtn.hide();
+  }, []);
 
   useEffect(() => {
     if (isStart) {
@@ -78,7 +82,11 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
             ) : (
               <></>
             )}
-            {score > 0 ? <span className="game-page__counter">Your score: {score}</span> : <></>}
+            {score > 0 ? (
+              <span className="game-page__counter">Your score: {score}</span>
+            ) : (
+              <></>
+            )}
             <Button
               width={160}
               isLineAnimation={true}
