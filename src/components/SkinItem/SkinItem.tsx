@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { ISkin } from "../../models/ISkin";
 
 import "./SkinItem.scss";
@@ -22,7 +22,11 @@ const SkinItem: FC<SkinItemProps> = ({
   fetchAvailableSkins,
 }) => {
   const { setSkin, currentSkin } = useSkinStore();
-  const { hapticFeedback, invoice } = useTg();
+  const { hapticFeedback, invoice, onInvoiceClosed } = useTg();
+
+  useEffect(() => {
+    console.log(onInvoiceClosed);
+  }, [onInvoiceClosed]);
 
   const buySkin = async () => {
     if (currentUser?.id && skin.id) {
@@ -46,9 +50,7 @@ const SkinItem: FC<SkinItemProps> = ({
         userId: currentUser?.id,
         amount: skin.price,
       });
-      const openInvoice = await invoice(resp.invoice_link);
-      console.log(openInvoice);
-    } 
+    }
   };
 
   return (

@@ -9,11 +9,16 @@ export function useTg() {
 
   const invoice = tg.openInvoice;
 
+  const onInvoiceClosed = tg.onEvent("invoiceClosed", (inv) => {
+    return inv;
+  });
+
   return {
     tg,
     user,
     cloudStorage,
     hapticFeedback,
-    invoice
+    invoice,
+    onInvoiceClosed,
   };
 }
