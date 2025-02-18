@@ -15,6 +15,12 @@ function App() {
 
   const navigate = useNavigate();
 
+  const navigateToGamePage = () => {
+    navigate("/");
+  };
+
+  tg.onEvent("backButtonClicked", navigateToGamePage);
+
   useEffect(() => {
     if (!tgData) {
       navigate("/notFound");
