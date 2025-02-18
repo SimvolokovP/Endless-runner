@@ -1,5 +1,7 @@
 import { FC, useEffect } from "react";
 import { ISkin } from "../../models/ISkin";
+import { PiGreaterThanBold } from "react-icons/pi";
+import { FaStar } from "react-icons/fa";
 
 import "./SkinItem.scss";
 import useSkinStore from "../../store/useSkinStore";
@@ -84,7 +86,8 @@ const SkinItem: FC<SkinItemProps> = ({
             backgroundColor: "#ff6952",
           }}
         >
-          {`> ${skin.price}`}
+          <PiGreaterThanBold />
+          {skin.price}
         </button>
       ) : (
         <button
@@ -93,7 +96,8 @@ const SkinItem: FC<SkinItemProps> = ({
             backgroundColor: "#52cbff",
           }}
         >
-          {`${skin.price} ⭐`}
+          {skin.price}
+          <FaStar />
         </button>
       )}
     </li>

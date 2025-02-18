@@ -4,4 +4,11 @@
     text-align: center;
     padding-top: 24px;
   }
+
+  &__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
 }

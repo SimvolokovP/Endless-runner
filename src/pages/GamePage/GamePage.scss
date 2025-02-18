@@ -16,6 +16,10 @@
     gap: 8px;
   }
 
+  &__counter {
+    animation: blink-animation 0.8s steps(5, start) infinite;
+  }
+
   &__record {
     color: #ffdc52;
   }
@@ -25,5 +29,15 @@
     top: 25px;
     z-index: 40;
     font-size: 18px;
+  }
+}
+
+@keyframes blink-animation {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }

@@ -18,6 +18,8 @@ function App() {
   useEffect(() => {
     if (!tg.ready()) {
       navigate("/notFound");
+    } else {
+      navigate("/");
     }
   }, [tg]);
 

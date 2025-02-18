@@ -78,7 +78,7 @@ const GamePage: FC<GamePageProps> = ({ isStart, setIsStart }) => {
             ) : (
               <></>
             )}
-            {score > 0 ? <span>Your score: {score}</span> : <></>}
+            {score > 0 ? <span className="game-page__counter">Your score: {score}</span> : <></>}
             <Button
               width={160}
               isLineAnimation={true}
