@@ -22,7 +22,7 @@ const horizontalPositions = [
 ];
 
 const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
-  const speed = 10;
+  const [speed, setSpeed] = useState<number>(6);
   const [positions, setPositions] = useState<number[]>([-50, -50]);
   const obstacleRefs = [
     useRef<HTMLDivElement>(null),
@@ -34,11 +34,11 @@ const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
   const animationFrameRef = useRef(0);
 
   const updatePosition = () => {
-    const newObstacleRects: DOMRect[] = []; 
+    const newObstacleRects: DOMRect[] = [];
 
     obstacleRefs.forEach((ref, index) => {
       if (ref.current) {
-        newObstacleRects.push(ref.current.getBoundingClientRect()); 
+        newObstacleRects.push(ref.current.getBoundingClientRect());
       }
 
       setPositions((prev) => {
@@ -47,19 +47,19 @@ const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
 
         if (newPosition[index] >= window.innerHeight) {
           const randomX = Math.floor(Math.random() * 3);
-          newPosition[index] = 0; // Сбросить позицию вниз
+          newPosition[index] = 0;
+
           setHorizontalPositionsState((prevPositions) => {
             const newPositions = [...prevPositions];
             newPositions[index] = horizontalPositions[randomX];
             return newPositions;
           });
         }
-
         return newPosition;
       });
     });
 
-    setObstacleRect(newObstacleRects); 
+    setObstacleRect(newObstacleRects);
 
     animationFrameRef.current = requestAnimationFrame(updatePosition);
   };
@@ -78,7 +78,7 @@ const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
     };
-  }, [isStart, speed, setObstacleRect]);
+  }, [isStart, setObstacleRect]);
 
   return (
     <>

@@ -35,9 +35,6 @@ const Player: FC<PlayerProps> = ({
     runFrame2: `https://${
       import.meta.env.VITE_SUPABASE_ID
     }.supabase.co/storage/v1/object/public/skins/${skin.toLowerCase()}/runFrame2.png`,
-    loseFrame: `https://${
-      import.meta.env.VITE_SUPABASE_ID
-    }.supabase.co/storage/v1/object/public/skins/${skin.toLowerCase()}/runFrame1.png`,
   };
 
   useEffect(() => {

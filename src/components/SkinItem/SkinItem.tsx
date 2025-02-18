@@ -5,6 +5,8 @@ import "./SkinItem.scss";
 import useSkinStore from "../../store/useSkinStore";
 import { IUser } from "../../models/IUser";
 import SkinsService from "../../api/supabaseApi/skinsApi";
+import { useTg } from "../../hooks/useTg";
+import { PaymentService } from "../../api/telegramApi/paymentApi";
 
 interface SkinItemProps {
   skin: ISkin;
@@ -20,6 +22,7 @@ const SkinItem: FC<SkinItemProps> = ({
   fetchAvailableSkins,
 }) => {
   const { setSkin, currentSkin } = useSkinStore();
+  const { hapticFeedback, invoice } = useTg();
 
   const buySkin = async () => {
     if (currentUser?.id && skin.id) {
@@ -30,6 +33,20 @@ const SkinItem: FC<SkinItemProps> = ({
       } else {
         console.log("non price");
       }
+    }
+  };
+
+  const buySkinByStars = async () => {
+    if (hapticFeedback) {
+      hapticFeedback.impactOccurred("soft");
+    }
+    if (currentUser?.id && skin.id) {
+      const resp = await PaymentService.skinPay({
+        skinId: skin.id,
+        userId: currentUser?.id,
+        amount: skin.price,
+      });
+      invoice(resp.invoice_link);
     }
   };
 
@@ -63,6 +80,7 @@ const SkinItem: FC<SkinItemProps> = ({
         </button>
       ) : (
         <button
+          onClick={buySkinByStars}
           style={{
             backgroundColor: "#52cbff",
           }}
