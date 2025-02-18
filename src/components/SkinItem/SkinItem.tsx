@@ -50,6 +50,7 @@ const SkinItem: FC<SkinItemProps> = ({
         userId: currentUser?.id,
         amount: skin.price,
       });
+      const openInvoice = await invoice(resp.invoice_link);
     }
   };
 

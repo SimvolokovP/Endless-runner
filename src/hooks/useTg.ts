@@ -10,6 +10,7 @@ export function useTg() {
   const invoice = tg.openInvoice;
 
   const onInvoiceClosed = tg.onEvent("invoiceClosed", (inv) => {
+    console.log(inv)
     return inv;
   });
 
