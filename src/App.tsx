@@ -10,13 +10,13 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const [isStart, setIsStart] = useState<boolean>(false);
-  const { user, tg } = useTg();
+  const { user, tg, tgData } = useTg();
   const { logIn } = useUserStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!tg.ready()) {
+    if (!tgData) {
       navigate("/notFound");
     } else {
       navigate("/");
@@ -42,8 +42,8 @@ function App() {
         <Route path="/leaders" element={<LeaderboardPage />}></Route>
         <Route path="/notFound" element={<NotFoundPage />}></Route>
       </Routes>
-      {tg.ready() && <MobileBar isStart={isStart} />}
-      <MobileBar isStart={isStart} />
+      {tgData && <MobileBar isStart={isStart} />}
+      {/* <MobileBar isStart={isStart} /> */}
     </>
   );
 }

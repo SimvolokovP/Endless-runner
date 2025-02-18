@@ -1,8 +1,16 @@
+import { useTg } from "../../hooks/useTg";
 import SkinsList from "../../components/SkinsList/SkinsList";
 
-import './ShopPage.scss';
+import "./ShopPage.scss";
+import { useEffect } from "react";
 
 const ShopPage = () => {
+  const { backBtn } = useTg();
+
+  useEffect(() => {
+    backBtn.show();
+  }, []);
+
   return (
     <section className="shop-page">
       <div className="container shop-page__container">

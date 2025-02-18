@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 const tg = Telegram.WebApp;
 
 export function useTg() {
+  const tgData = tg.initDataUnsafe;
   const user = tg.initDataUnsafe.user;
 
   const cloudStorage = tg.CloudStorage;
@@ -9,11 +12,15 @@ export function useTg() {
 
   const invoice = tg.openInvoice;
 
-  const onInvoiceClosed = () => {
-    tg.onEvent("invoiceClosed", (inv) => {
-      return inv;
-    });
+  const navigate = useNavigate();
+
+  const navigateToRoomsPage = () => {
+    navigate("/");
   };
+
+  const backBtn = tg.BackButton;
+
+  Telegram.WebApp.onEvent("backButtonClicked", navigateToRoomsPage);
 
   return {
     tg,
@@ -21,6 +28,7 @@ export function useTg() {
     cloudStorage,
     hapticFeedback,
     invoice,
-    onInvoiceClosed,
+    backBtn,
+    tgData,
   };
 }
