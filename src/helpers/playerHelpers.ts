@@ -8,10 +8,8 @@ export const createPlayerFigures = async (player: PlayerImage) => {
   const playerRunFrame2 = new Image();
   playerRunFrame2.src = player.runFrame2;
 
-  const playerLoseFrame = new Image();
-  playerLoseFrame.src = player.loseFrame;
 
-  return { playerRunFrame1, playerRunFrame2, playerLoseFrame };
+  return { playerRunFrame1, playerRunFrame2 };
 };
 
 export const handleRun = (
@@ -20,7 +18,6 @@ export const handleRun = (
 ) => {
   if (imageRef.current && playerData) {
     const playerFigure = imageRef.current as HTMLImageElement;
-    if (playerFigure.src.includes(playerData.playerSettings.loseFrame)) return;
 
     playerFigure.src = playerFigure.src.includes(
       playerData.playerSettings.runFrame1
