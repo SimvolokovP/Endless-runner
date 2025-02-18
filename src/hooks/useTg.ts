@@ -12,15 +12,15 @@ export function useTg() {
 
   const invoice = tg.openInvoice;
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const navigateToRoomsPage = () => {
-    navigate("/");
-  };
+  // const navigateToGamePage = () => {
+  //   navigate("/");
+  // };
 
   const backBtn = tg.BackButton;
 
-  Telegram.WebApp.onEvent("backButtonClicked", navigateToRoomsPage);
+  // Telegram.WebApp.onEvent("backButtonClicked", navigateToGamePage);
 
   return {
     tg,

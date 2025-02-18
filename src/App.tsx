@@ -42,8 +42,8 @@ function App() {
         <Route path="/leaders" element={<LeaderboardPage />}></Route>
         <Route path="/notFound" element={<NotFoundPage />}></Route>
       </Routes>
-      {tgData && <MobileBar isStart={isStart} />}
-      {/* <MobileBar isStart={isStart} /> */}
+      {/* {tgData && <MobileBar isStart={isStart} />} */}
+      <MobileBar isStart={isStart} />
     </>
   );
 }
