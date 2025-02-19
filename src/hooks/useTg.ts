@@ -12,6 +12,10 @@ export function useTg() {
 
   const invoice = tg.openInvoice;
 
+  const showMessage = (messgae: string) => {
+    tg.showAlert(messgae);
+  };
+
   // const navigate = useNavigate();
 
   // const navigateToGamePage = () => {
@@ -30,5 +34,6 @@ export function useTg() {
     invoice,
     backBtn,
     tgData,
+    showMessage,
   };
 }

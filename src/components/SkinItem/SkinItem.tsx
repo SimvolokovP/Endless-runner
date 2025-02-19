@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { ISkin } from "../../models/ISkin";
 import { PiGreaterThanBold } from "react-icons/pi";
 import { FaStar } from "react-icons/fa";
@@ -24,16 +24,21 @@ const SkinItem: FC<SkinItemProps> = ({
   fetchAvailableSkins,
 }) => {
   const { setSkin, currentSkin } = useSkinStore();
-  const { hapticFeedback, invoice, tg } = useTg();
+  const { hapticFeedback, invoice, tg, showMessage } = useTg();
 
   const buySkin = async () => {
     if (currentUser?.id && skin.id) {
       if (currentUser.record >= skin.price) {
-        await SkinsService.addSkinForUser(currentUser?.id, skin.id);
-        console.log("buy");
-        fetchAvailableSkins();
+        try {
+          await SkinsService.addSkinForUser(currentUser?.id, skin.id);
+          showMessage("Success! Skin purchased successfully.");
+          fetchAvailableSkins();
+        } catch (error) {
+          console.warn("Error buying skin: ", error);
+          showMessage("Error! Could not purchase skin.");
+        }
       } else {
-        console.log("non price");
+        showMessage("Insufficient funds to purchase this skin.");
       }
     }
   };
@@ -43,20 +48,25 @@ const SkinItem: FC<SkinItemProps> = ({
       hapticFeedback.impactOccurred("soft");
     }
     if (currentUser?.id && skin.id) {
-      const resp = await PaymentService.skinPay({
-        skinId: skin.id,
-        userId: currentUser?.id,
-        amount: skin.price,
-      });
-      await invoice(resp.invoice_link);
+      try {
+        const resp = await PaymentService.skinPay({
+          skinId: skin.id,
+          userId: currentUser?.id,
+          amount: skin.price,
+        });
+        await invoice(resp.invoice_link);
 
-      tg.onEvent("invoiceClosed", async (inv) => {
-        if (inv.status === "paid" && currentUser.id && skin.id) {
-          await SkinsService.addSkinForUser(currentUser?.id, skin.id);
-          console.log("buy");
-          fetchAvailableSkins();
-        }
-      });
+        tg.onEvent("invoiceClosed", async (inv) => {
+          if (inv.status === "paid" && currentUser.id && skin.id) {
+            await SkinsService.addSkinForUser(currentUser?.id, skin.id);
+            showMessage("Success! Skin purchased successfully.");
+            fetchAvailableSkins();
+          }
+        });
+      } catch (error) {
+        console.warn("Error processing payment: ", error);
+        showMessage("Error! The server is currently down :)");
+      }
     }
   };
 
