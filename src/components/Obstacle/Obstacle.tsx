@@ -22,7 +22,7 @@ const horizontalPositions = [
 ];
 
 const Obstacle: FC<ObstacleProps> = ({ isStart, setObstacleRect }) => {
-  const [speed, setSpeed] = useState<number>(6);
+  const [speed, setSpeed] = useState<number>(10);
   const [positions, setPositions] = useState<number[]>([-50, -50]);
   const obstacleRefs = [
     useRef<HTMLDivElement>(null),

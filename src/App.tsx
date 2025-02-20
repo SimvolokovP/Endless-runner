@@ -10,7 +10,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const [isStart, setIsStart] = useState<boolean>(false);
-  const { user, tg, tgData } = useTg();
+  const { user, tg } = useTg();
   const { logIn } = useUserStore();
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function App() {
   tg.onEvent("backButtonClicked", navigateToGamePage);
 
   useEffect(() => {
-    if (!tgData) {
+    if (!user) {
       navigate("/notFound");
     } else {
       navigate("/");
@@ -31,7 +31,9 @@ function App() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      await logIn(user?.id || 227072);
+      if (user && user.id) {
+        await logIn(user?.id);
+      }
     };
 
     fetchUser();
@@ -48,7 +50,7 @@ function App() {
         <Route path="/leaders" element={<LeaderboardPage />}></Route>
         <Route path="/notFound" element={<NotFoundPage />}></Route>
       </Routes>
-      {/* {tgData && <MobileBar isStart={isStart} />} */}
+      {/* {user && <MobileBar isStart={isStart} />} */}
       <MobileBar isStart={isStart} />
     </>
   );
